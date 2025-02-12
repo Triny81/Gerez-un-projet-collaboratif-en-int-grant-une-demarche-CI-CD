@@ -30,7 +30,7 @@ jobs:
 
       # Téléchargement du rapport de couverture Jacoco
       - name: Upload JaCoCo coverage report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: jacoco-report
           path: back/target/site/jacoco/
@@ -61,7 +61,7 @@ jobs:
 
       # Téléchargement du rapport de couverture du frontend
       - name: Upload frontend coverage report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: front-coverage
           path: front/coverage/
