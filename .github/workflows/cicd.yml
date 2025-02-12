@@ -56,7 +56,7 @@ jobs:
 
       # Exécution des tests avec couverture
       - name: Run frontend tests and generate coverage
-        run: npm run test -- --code-coverage --browsers=ChromeHeadless
+        run: npm run test -- --code-coverage --browsers=ChromeHeadless --watch=false
         working-directory: ./front
 
       # Téléchargement du rapport de couverture du frontend
