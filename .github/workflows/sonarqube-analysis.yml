@@ -37,7 +37,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
-            -Dsonar.projectKey=bobapp-backend
+            -Dsonar.projectKey=triny81_bobapp-backend
             -Dsonar.organization=triny81
             -Dsonar.sources=back/src
             -Dsonar.host.url=https://sonarcloud.io
@@ -77,7 +77,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
-            -Dsonar.projectKey=bobapp-frontend
+            -Dsonar.projectKey=triny81_bobapp-frontend
             -Dsonar.organization=triny81
             -Dsonar.sources=front/src
             -Dsonar.host.url=https://sonarcloud.io
