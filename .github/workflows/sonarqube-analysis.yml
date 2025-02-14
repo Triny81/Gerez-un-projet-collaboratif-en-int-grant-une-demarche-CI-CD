@@ -89,6 +89,7 @@ jobs:
             -Dsonar.sources=front/src
             -Dsonar.host.url=https://sonarcloud.io
             -Dsonar.javascript.lcov.reportPaths=coverage/bobapp/lcov.info
+            -Dsonar.verbose=true
 
       - name: Check Coverage Output
         run: |
