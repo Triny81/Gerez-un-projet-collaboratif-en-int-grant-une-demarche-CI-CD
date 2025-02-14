@@ -92,8 +92,8 @@ jobs:
 
       - name: List coverage files
         run: |
-          ls -la coverage/
-          cat coverage/lcov-report/lcov-info/lcov-report.json
+          ls -la coverage/bobapp
+          cat coverage/bobapp/lcov.info
 
       
 
