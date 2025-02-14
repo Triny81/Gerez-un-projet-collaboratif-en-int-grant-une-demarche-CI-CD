@@ -14,10 +14,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Java 17
+      - name: Set up Java 11
         uses: actions/setup-java@v3
         with:
-          java-version: 17
+          java-version: 11
           distribution: temurin
 
       - name: Build Backend
@@ -44,6 +44,11 @@ jobs:
             -Dsonar.java.binaries=back/target/classes
             -Dsonar.junit.reportPaths=target/test-classes
             -Dsonar.jacoco.reportPaths=target/jacoco.exec
+            
+      - name: List Jacoco coverage files
+        run: |
+            ls -la back/target/
+            cat back/target/jacoco.exec
 
   frontend-sonarcloud:
     runs-on: ubuntu-latest
@@ -84,4 +89,14 @@ jobs:
             -Dsonar.sources=front/src
             -Dsonar.host.url=https://sonarcloud.io
             -Dsonar.javascript.lcov.reportPaths=coverage/bobapp/lcov.info
+
+      - name: List coverage files
+        run: |
+          ls -la coverage/
+          cat coverage/lcov-report/lcov-info/lcov-report.json
+
+      
+
+    
+      
 
