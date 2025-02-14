@@ -35,7 +35,7 @@ jobs:
         with:
           args: >
             -Dsonar.projectKey=bobapp-backend
-            -Dsonar.organization=FBalda
+            -Dsonar.organization=triny81
             -Dsonar.sources=back/src
             -Dsonar.host.url=https://sonarcloud.io
 
@@ -61,7 +61,7 @@ jobs:
         with:
           args: >
             -Dsonar.projectKey=bobapp-frontend
-            -Dsonar.organization=FBalda
+            -Dsonar.organization=triny81
             -Dsonar.sources=front/src
             -Dsonar.host.url=https://sonarcloud.io
 
