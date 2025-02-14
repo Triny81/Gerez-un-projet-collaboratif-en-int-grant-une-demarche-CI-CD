@@ -1,0 +1,6 @@
+projectKey=bobapp-backend
+serverUrl=http://localhost:9000
+serverVersion=25.2.0.102705
+dashboardUrl=http://localhost:9000/dashboard?id=bobapp-backend
+ceTaskId=dce5af2b-0bb9-4f4b-82d9-d60aa18549cb
+ceTaskUrl=http://localhost:9000/api/ce/task?id=dce5af2b-0bb9-4f4b-82d9-d60aa18549cb
