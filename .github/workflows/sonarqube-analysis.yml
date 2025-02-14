@@ -44,7 +44,10 @@ jobs:
             -Dsonar.java.binaries=back/target/classes
             -Dsonar.junit.reportPaths=target/test-classes
             -Dsonar.jacoco.reportPaths=target/jacoco.exec
-            
+
+      - name: Run tests for Backend
+        run: mvn -f back/pom.xml test
+          
       - name: List Jacoco coverage files
         run: |
             ls -la back/target/
@@ -90,6 +93,11 @@ jobs:
             -Dsonar.host.url=https://sonarcloud.io
             -Dsonar.javascript.lcov.reportPaths=coverage/bobapp/lcov.info
 
+      - name: Run tests with Karma
+        run: |
+          cd front
+          npx karma start karma.conf.js --single-run --no-auto-watch
+          
       - name: List coverage files
         run: |
           ls -la coverage/bobapp
