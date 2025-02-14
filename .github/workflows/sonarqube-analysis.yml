@@ -65,6 +65,11 @@ jobs:
           cd front
           npm install
 
+      - name: Run tests with Karma
+        run: |
+          cd front
+          npm run test -- --code-coverage --browsers=ChromeHeadless --watch=false
+
       - name: Cache SonarCloud dependencies
         uses: actions/cache@v3
         with:
@@ -72,11 +77,6 @@ jobs:
           key: ${{ runner.os }}-sonar-frontend-${{ hashFiles('**/frontend/**') }}
           restore-keys: |
             ${{ runner.os }}-sonar-frontend-
-
-      - name: Run tests with Karma
-        run: |
-          cd front
-          npm run test -- --code-coverage --browsers=ChromeHeadless --watch=false
 
       - name: Run SonarCloud analysis for Frontend
         uses: sonarsource/sonarqube-scan-action@v4
@@ -89,12 +89,6 @@ jobs:
             -Dsonar.sources=front/src
             -Dsonar.host.url=https://sonarcloud.io
             -Dsonar.javascript.lcov.reportPaths=coverage/bobapp/lcov.info
-            -Dsonar.exclusions=**/*.spec.ts
-
-      - name: Display lcov.info content
-        run: |
-          cd front
-          cat coverage/bobapp/lcov.info
 
       
 
