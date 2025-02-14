@@ -91,11 +91,10 @@ jobs:
             -Dsonar.javascript.lcov.reportPaths=coverage/bobapp/lcov.info
             -Dsonar.verbose=true
 
-      - name: Check Coverage Output
+      - name: Display lcov.info content
         run: |
           cd front
-          ls -la coverage
-          ls -la coverage/bobapp
+          cat coverage/bobapp/lcov.info
 
       
 
