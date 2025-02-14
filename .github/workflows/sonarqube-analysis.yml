@@ -42,6 +42,8 @@ jobs:
             -Dsonar.sources=back/src
             -Dsonar.host.url=https://sonarcloud.io
             -Dsonar.java.binaries=back/target/classes
+            -Dsonar.junit.reportPaths=target/test-classes
+            -Dsonar.jacoco.reportPaths=target/jacoco.exec
 
   frontend-sonarcloud:
     runs-on: ubuntu-latest
@@ -81,4 +83,5 @@ jobs:
             -Dsonar.organization=triny81
             -Dsonar.sources=front/src
             -Dsonar.host.url=https://sonarcloud.io
+            -Dsonar.javascript.lcov.reportPaths=coverage/bobapp/lcov.info
 
