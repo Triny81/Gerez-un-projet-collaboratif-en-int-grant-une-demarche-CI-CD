@@ -73,6 +73,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-sonar-frontend-
 
+      - name: Run tests with Karma
+        run: |
+          cd front
+          npm run test -- --code-coverage --browsers=ChromeHeadless --watch=false
+
       - name: Run SonarCloud analysis for Frontend
         uses: sonarsource/sonarqube-scan-action@v4
         env:
@@ -85,15 +90,8 @@ jobs:
             -Dsonar.host.url=https://sonarcloud.io
             -Dsonar.javascript.lcov.reportPaths=coverage/bobapp/lcov.info
 
-      - name: Run tests with Karma
-        run: |
-          cd front
-          npm run test -- --code-coverage --browsers=ChromeHeadless --watch=false
-          
-      - name: List coverage files
-        run: |
-          ls -la coverage/bobapp
-          cat coverage/bobapp/lcov.info
+      
+
 
       
 
