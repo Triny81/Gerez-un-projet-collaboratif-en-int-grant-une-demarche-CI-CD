@@ -7,35 +7,61 @@ on:
   pull_request:
 
 jobs:
-  build:
+  backend-sonarcloud:
     runs-on: ubuntu-latest
-
+    name: Analyze Backend
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up Java 11
-      uses: actions/setup-java@v3
-      with:
-        java-version: 11
-        distribution: 'temurin'
-        java-package: jdk
-        check-latest: false
-        server-id: github
-        server-username: GITHUB_ACTOR
-        server-password: GITHUB_TOKEN
-        overwrite-settings: true
+      - name: Set up Java 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: temurin
 
-    - name: Cache SonarQube dependencies
-      uses: actions/cache@v3
-      with:
-        path: ~/.sonar/cache
-        key: ${{ runner.os }}-sonar-${{ hashFiles('**/sonar-project.properties') }}
-        restore-keys: |
-          ${{ runner.os }}-sonar-
+      - name: Cache SonarCloud dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar-backend-${{ hashFiles('**/backend/**') }}
+          restore-keys: |
+            ${{ runner.os }}-sonar-backend-
 
-    - name: Run SonarCloud analysis
-      uses: sonarsource/sonarcloud-github-action@v4
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Run SonarCloud analysis for Backend
+        uses: sonarsource/sonarqube-scan-action@v4
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectKey=bobapp-backend
+            -Dsonar.organization=FBalda
+            -Dsonar.sources=back/src
+            -Dsonar.host.url=https://sonarcloud.io
+
+  frontend-sonarcloud:
+    runs-on: ubuntu-latest
+    name: Analyze Frontend
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Cache SonarCloud dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar-frontend-${{ hashFiles('**/frontend/**') }}
+          restore-keys: |
+            ${{ runner.os }}-sonar-frontend-
+
+      - name: Run SonarCloud analysis for Frontend
+        uses: sonarsource/sonarqube-scan-action@v4
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectKey=bobapp-frontend
+            -Dsonar.organization=FBalda
+            -Dsonar.sources=front/src
+            -Dsonar.host.url=https://sonarcloud.io
 
