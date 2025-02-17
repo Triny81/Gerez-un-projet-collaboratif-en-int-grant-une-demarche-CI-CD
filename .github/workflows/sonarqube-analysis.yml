@@ -20,11 +20,14 @@ jobs:
           java-version: 11
           distribution: temurin
 
-      - name: Build Backend
-        run: mvn -f back/pom.xml clean install
+      - name: Compile the project
+        run: mvn compile
 
-      - name: Run tests and Jacoco report
-        run: mvn clean verify
+      - name: Run unit tests
+        run: mvn test
+
+      - name: Run tests and generate Jacoco report
+        run: mvn verify jacoco:report
 
       - name: Cache SonarCloud dependencies
         uses: actions/cache@v3
