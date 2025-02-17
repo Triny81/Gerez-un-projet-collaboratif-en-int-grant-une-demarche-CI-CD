@@ -20,21 +20,14 @@ jobs:
           java-version: 11
           distribution: temurin
 
-      - name: Cache Maven packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
-
       - name: Compile the project
-        run: mvn compile
+        run: mvn -f back/pom.xml compile
 
       - name: Run unit tests
-        run: mvn test
+        run: mvn -f back/pom.xml test
 
       - name: Run tests and generate Jacoco report
-        run: mvn verify jacoco:report
+        run: mvn -f back/pom.xml verify jacoco:report
 
       - name: Cache SonarCloud dependencies
         uses: actions/cache@v3
