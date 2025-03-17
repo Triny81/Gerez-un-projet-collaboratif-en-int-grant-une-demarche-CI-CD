@@ -34,6 +34,28 @@ jobs:
         with:
           name: jacoco-report
           path: back/target/site/jacoco/
+          
+      - name: Cache SonarCloud dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar-backend-${{ hashFiles('**/backend/**') }}
+          restore-keys: |
+            ${{ runner.os }}-sonar-backend-
+
+      - name: Run SonarCloud analysis for Backend
+        uses: sonarsource/sonarqube-scan-action@v4
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectKey=triny81_bobapp-backend
+            -Dsonar.organization=triny81
+            -Dsonar.sources=back/src
+            -Dsonar.host.url=https://sonarcloud.io
+            -Dsonar.java.binaries=back/target/classes
+            -Dsonar.junit.reportPaths=target/test-classes
+            -Dsonar.coverage.jacoco.xmlReportPaths=back/target/site/jacoco/jacoco.xml
 
   # Job pour les tests frontend
   frontend-tests:
@@ -65,6 +87,30 @@ jobs:
         with:
           name: front-coverage
           path: front/coverage/
+
+      - name: Cache SonarCloud dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar-frontend-${{ hashFiles('**/frontend/**') }}
+          restore-keys: |
+            ${{ runner.os }}-sonar-frontend-
+
+      - name: Run SonarCloud analysis for Frontend
+        uses: sonarsource/sonarqube-scan-action@v4
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          projectBaseDir: ./front
+          args: >
+            -Dsonar.projectKey=triny81_bobapp-frontend
+            -Dsonar.organization=triny81
+            -Dsonar.sources=src
+            -Dsonar.exclusions=node_modules/**,coverage/**,dist/**
+            -Dsonar.tests=src
+            -Dsonar.test.inclusions=src/**/*.spec.ts,src/**/*.test.ts
+            -Dsonar.javascript.lcov.reportPaths=coverage/bobapp/lcov.info
+            -Dsonar.qualitygate.wait=true
           
   docker-build-push:
     runs-on: ubuntu-latest
