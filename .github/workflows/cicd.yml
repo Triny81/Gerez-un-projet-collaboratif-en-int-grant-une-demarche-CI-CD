@@ -65,3 +65,28 @@ jobs:
         with:
           name: front-coverage
           path: front/coverage/
+          
+  docker-build-push:
+    runs-on: ubuntu-latest
+    needs: [backend-tests, frontend-tests]  # Attendre la validation des tests
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      # Build et push du backend
+      - name: Build and push backend image
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/bobapp-backend:latest -f back/Dockerfile ./back
+          docker push ${{ secrets.DOCKER_USERNAME }}/bobapp-backend:latest
+
+      # Build et push du frontend
+      - name: Build and push frontend image
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/bobapp-frontend:latest -f front/Dockerfile ./front
+          docker push ${{ secrets.DOCKER_USERNAME }}/bobapp-frontend:latest
