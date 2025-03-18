@@ -117,11 +117,19 @@ jobs:
     runs-on: ubuntu-latest
     needs: [backend-tests, frontend-tests]
     steps:
-      - name: Check SonarCloud Quality Gate
+      - name: Check SonarCloud Quality Gate for Backend
         run: |
           STATUS=$(curl -s -u "${{ secrets.SONAR_TOKEN }}:" "https://sonarcloud.io/api/qualitygates/project_status?projectKey=triny81_bobapp-backend" | jq -r .projectStatus.status)
           if [ "$STATUS" != "OK" ]; then
-            echo "Quality gate failed!"
+            echo "Quality gate for backend failed!"
+            exit 1
+          fi
+
+      - name: Check SonarCloud Quality Gate for Frontend
+        run: |
+          STATUS=$(curl -s -u "${{ secrets.SONAR_TOKEN }}:" "https://sonarcloud.io/api/qualitygates/project_status?projectKey=triny81_bobapp-frontend" | jq -r .projectStatus.status)
+          if [ "$STATUS" != "OK" ]; then
+            echo "Quality gate for frontend failed!"
             exit 1
           fi
 
